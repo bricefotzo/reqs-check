@@ -43,7 +43,7 @@ jobs:
         # Create temporary requirements files for testing
         echo "pandas>=1.1.5\nnumpy==1.19.5\nscipy~=1.5.4" > requirements1.txt
         echo "pandas==1.1.5\nnumpy==1.19.3\nmatplotlib==3.3.4" > requirements2.txt
-        reqs-xheck requirements1.txt requirements2.txt --only-diff
+        reqs-check requirements1.txt requirements2.txt --only-diff
 
     - name: Run unit tests
       run: |
