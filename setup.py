@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name="reqs-check",
-    version="0.1.0",
+    version="0.1.0.dev1",
     author="Brice Fotzo",
     author_email="bricef.tech@gmail.com",
-    description="A tool to compare multiple requirements.txt files",
+    description="A tool to check and compare multiple `requirements.txt` files for Python projects.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/bricefotzo/reqs-check",
