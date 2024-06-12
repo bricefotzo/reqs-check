@@ -1,0 +1,67 @@
+name: Python CI Pipeline
+
+on: 
+ push:
+ pull_request:
+ workflow_dispatch:
+
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        #make sure we have the latest pip version
+        python -m pip install --upgrade pip
+        pip install wheel ruff pytest twine
+
+    - name: Lint with Ruff
+      run: |
+        ruff check .
+
+    - name: Build package
+      run: |
+        python setup.py sdist bdist_wheel
+
+    - name: Install package
+      run: |
+        pip install dist/*.whl
+
+    - name: Verify package installation and CLI
+      run: |
+        reqs-check --help
+        # Create temporary requirements files for testing
+        echo "pandas>=1.1.5\nnumpy==1.19.5\nscipy~=1.5.4" > requirements1.txt
+        echo "pandas==1.1.5\nnumpy==1.19.3\nmatplotlib==3.3.4" > requirements2.txt
+        reqs-xheck requirements1.txt requirements2.txt --only-diff
+
+    - name: Run unit tests
+      run: |
+        pytest tests/
+      
+    - name: Publish package to Test PyPI
+      env:
+        TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
+      run: |
+        twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+    - name: Verify package installation from Test PyPI
+      run: |
+        pip install --index-url https://test.pypi.org/simple/ reqs-check
+        reqs-check --help
+
+
+    - name: Cleanup
+      if: always()
+      run: echo "CI pipeline completed"
