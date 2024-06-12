@@ -103,17 +103,17 @@ We plan to add more features to `reqs-check` to resolve some use cases that we'v
 
 ### Planned features
 
-- [ ] Support finding of duplicated packages in the requirements files.
+[ ] Support finding of duplicated packages in the requirements files.
 
-- [ ] Support linting of requirements files for best practices.
+[ ] Support linting of requirements files for best practices.
 
-- [ ]  Support for additional file formats (e.g., `Pipfile`, `pyproject.toml`).
+[ ]  Support for additional file formats (e.g., `Pipfile`, `pyproject.toml`).
 
-- [ ]  Support for additional checks (e.g., security vulnerabilities).
+[ ]  Support for additional checks (e.g., security vulnerabilities).
 
-- [ ] Integration with CI/CD pipelines for automated checks.
+[ ] Integration with CI/CD pipelines for automated checks.
 
-- [ ] Detailed reports in various formats (e.g., JSON, HTML).
+[ ] Detailed reports in various formats (e.g., JSON, HTML).
 
 ## License
 
