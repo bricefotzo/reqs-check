@@ -54,7 +54,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
       run: |
-        twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+        twine upload --repository-url https://test.pypi.org/legacy/ --skip-existing dist/*
 
     - name: Verify package installation from Test PyPI
       run: |
