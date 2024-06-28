@@ -1,7 +1,7 @@
 
 # reqs-check
 
-`reqs-check` is a tool to check and compare multiple `requirements.txt` files for Python projects.
+`reqs-check` is a tool to check and compare dependencies files(requirements.txt, pyproject.toml, etc...) for Python projects.
 
 
 ## Installation
@@ -14,17 +14,17 @@ pip install reqs-check
 
 ## Usage
 ```
-Usage: 
-    reqs-check [-h] [--only-diff] [--find-duplicates] [--lint] F [F ...]
+usage: reqs-check [-h] [--only-diff] [--find-duplicates] F [F ...]
 
-Check and compare multiple requirements.txt files.
+Check and compare multiple dependencies files.
 
-Positional arguments:
-  F                  Paths to the requirements.txt files
+positional arguments:
+  F                  Paths to the dependencies files
 
-Options:
+options:
   -h, --help         show this help message and exit
   --only-diff        Only show packages with differing versions
+  --find-duplicates  Find duplicate packages in the dependencies files
 ```
 
 ## Examples
@@ -47,8 +47,12 @@ numpy==1.19.3
 matplotlib==3.2.1
 requests>=2.24.0
 scipy==1.5.4
+numpy==1.19
+requests
 ```
 ### Compare requirements files
+
+> **Note:** The files are in the directory `examples/` of the github repository.
 
 This command compares two `requirements.txt` files and highlights the differences.
 
@@ -62,13 +66,13 @@ reqs-check requirements1.txt requirements2.txt
 +====+============+=====================+=====================+
 |  0 | pandas     | ==1.1.5             | ==1.1.5             |
 +----+------------+---------------------+---------------------+
-|  1 | numpy      | ==1.19.5            | ==1.19.3            |
+|  1 | numpy      | ==1.19.5            | ==1.19              |
 +----+------------+---------------------+---------------------+
 |  2 | scipy      | ~=1.5.4             | ==1.5.4             |
 +----+------------+---------------------+---------------------+
 |  3 | matplotlib | ==3.3.4             | ==3.2.1             |
 +----+------------+---------------------+---------------------+
-|  4 | requests   | Not Present         | >=2.24.0            |
+|  4 | requests   | Not Present         | Any                 |
 +----+------------+---------------------+---------------------+
 ```
 > **Note:** The values are color-coded for better readability in the terminal.
@@ -85,25 +89,42 @@ reqs-check --only-diff requirements1.txt requirements2.txt
 +----+------------+---------------------+---------------------+
 |    | Package    | requirements1.txt   | requirements2.txt   |
 +====+============+=====================+=====================+
-|  1 | numpy      | ==1.19.5            | ==1.19.3            |
+|  1 | numpy      | ==1.19.5            | ==1.19              |
 +----+------------+---------------------+---------------------+
 |  2 | scipy      | ~=1.5.4             | ==1.5.4             |
 +----+------------+---------------------+---------------------+
 |  3 | matplotlib | ==3.3.4             | ==3.2.1             |
 +----+------------+---------------------+---------------------+
-|  4 | requests   | Not Present         | >=2.24.0            |
+|  4 | requests   | Not Present         | Any                 |
 +----+------------+---------------------+---------------------+
 ```
 You can see that the output only shows the packages with differing versions, so the first package `pandas` is not displayed.
 
+
+### Find duplicates in requirements files
+
+This command finds duplicated packages in the `requirements.txt` files(at least one).
+
+```sh
+reqs-check --find-duplicates requirements1.txt requirements2.txt
+```
+**Output:**
+```
+Duplicates in requirements2.txt:
+  numpy:
+    - ==1.19.3 (line 2)
+    - ==1.19 (line 6)
+  requests:
+    - >=2.24.0 (line 4)
+    - Any (line 7)
+````
+You can see that the output shows the duplicated packages in the second file `requirements2.txt` while the first file `requirements1.txt` has no duplicated packages.
 
 ## Next Steps
 
 We plan to add more features to `reqs-check` to resolve some use cases that we've had to deal with. 
 
 ### Planned features
-
-- Support finding of duplicated packages in the requirements files.
 
 - Support linting of requirements files for best practices.
 
