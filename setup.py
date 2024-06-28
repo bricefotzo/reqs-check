@@ -5,7 +5,7 @@ setup(
     version="0.1.2",
     author="Brice Fotzo",
     author_email="bricef.tech@gmail.com",
-    description="A tool to check and compare multiple `requirements.txt` files for Python projects.",
+    description="A tool to check and compare dependencies(requirements.txt and so on) files for Python projects.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/bricefotzo/reqs-check",
