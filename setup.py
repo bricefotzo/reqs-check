@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="reqs-check",
-    version="0.1.2",
+    version="0.2.0",
     author="Brice Fotzo",
     author_email="bricef.tech@gmail.com",
     description="A tool to check and compare dependencies(requirements.txt and so on) files for Python projects.",
