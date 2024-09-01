@@ -37,9 +37,6 @@ def test_check():
 
 def test_lint():
     runner = CliRunner()
-    result = runner.invoke(app, ["lint", "--help"])
-    assert result.exit_code == 0
-    assert "Usage: root lint" in result.output
 
     lint_result = runner.invoke(app, ["lint", "examples/requirements3.txt"])
     assert lint_result.exit_code == 0

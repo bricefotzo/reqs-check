@@ -22,18 +22,18 @@ def test_compare_requirements(tmp_path):
     req_file2 = tmp_path / "requirements2.txt"
     req_file2.write_text("pandas==1.1.5\nnumpy==1.19.3\nmatplotlib==3.3.4")
 
-    df = compare_requirements([str(req_file1), str(req_file2)])
+    df = compare_requirements([req_file1, req_file2])
 
-    expected_columns = ["Package", str(req_file1), str(req_file2)]
+    expected_columns = ["Package", req_file1, req_file2]
     assert list(df.columns) == expected_columns
     assert "pandas" in df["Package"].values
     assert "numpy" in df["Package"].values
     assert "scipy" in df["Package"].values
     assert "matplotlib" in df["Package"].values
-    assert df.loc[df["Package"] == "pandas", str(req_file1)].values[0] == ">=1.1.5"
-    assert df.loc[df["Package"] == "pandas", str(req_file2)].values[0] == "==1.1.5"
+    assert df.loc[df["Package"] == "pandas", req_file1].values[0] == ">=1.1.5"
+    assert df.loc[df["Package"] == "pandas", req_file2].values[0] == "==1.1.5"
     assert (
-        df.loc[df["Package"] == "matplotlib", str(req_file1)].values[0] == "Not Present"
+        df.loc[df["Package"] == "matplotlib", req_file1].values[0] == "Not Present"
     )
 
 
@@ -44,7 +44,7 @@ def test_filter_differences(tmp_path):
     req_file2 = tmp_path / "requirements2.txt"
     req_file2.write_text("pandas==1.1.5\nnumpy==1.19.3\nmatplotlib==3.3.4")
 
-    df = compare_requirements([str(req_file1), str(req_file2)])
+    df = compare_requirements([req_file1, req_file2])
     filtered_df = filter_differences(df)
 
     assert "pandas" not in filtered_df["Package"].values
