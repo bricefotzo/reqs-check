@@ -1,9 +1,10 @@
 import pandas as pd
+from pathlib import Path
 from termcolor import colored
 from .utils import parse_requirements
 
 
-def highlight_differences(df):
+def highlight_differences(df: pd.DataFrame) -> pd.DataFrame:
     """
     Highlight differing versions in a DataFrame.
 
@@ -29,7 +30,7 @@ def highlight_differences(df):
     return df_highlighted
 
 
-def filter_differences(df):
+def filter_differences(df: pd.DataFrame) -> pd.DataFrame:
     """
     Filter a DataFrame to only show rows with differing versions.
 
@@ -43,7 +44,7 @@ def filter_differences(df):
     return df_filtered
 
 
-def compare_requirements(files) -> pd.DataFrame:
+def compare_requirements(files: list[str] | list[Path]) -> pd.DataFrame:
     """
     Compare multiple requirements files and return a DataFrame of the differences.
 
@@ -57,6 +58,8 @@ def compare_requirements(files) -> pd.DataFrame:
 
     for file in files:
         requirements = parse_requirements(file)
+        for pkg, versions in requirements.items():
+            requirements[pkg] = versions[0][0]
         all_requirements[file] = requirements
 
     df = pd.DataFrame(all_requirements).fillna("Not Present")
