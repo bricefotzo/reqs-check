@@ -7,7 +7,11 @@ def test_parse_requirements(tmp_path):
     req_file.write_text("pandas>=1.1.5\nnumpy==1.19.5\nscipy~=1.5.4")
 
     result = parse_requirements(req_file)
-    expected = {'pandas': [('>=1.1.5', 1)], 'numpy': [('==1.19.5', 2)], 'scipy': [('~=1.5.4', 3)]}
+    expected = {
+        "pandas": [(">=1.1.5", 1)],
+        "numpy": [("==1.19.5", 2)],
+        "scipy": [("~=1.5.4", 3)],
+    }
     assert result == expected
 
 

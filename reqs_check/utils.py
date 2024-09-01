@@ -3,6 +3,7 @@ import re
 import requests
 from typing import Optional, Tuple
 
+
 def parse_requirements(file_path) -> dict:
     """
     Parse a requirements file and return a dictionary of packages and versions.
@@ -30,6 +31,7 @@ def parse_requirements(file_path) -> dict:
                     requirements[pkg].append((ver.strip(), line_number))
     return requirements
 
+
 def get_latest_version(package_name: str) -> Optional[str]:
     url = f"https://pypi.org/pypi/{package_name}/json"
     try:
@@ -39,7 +41,8 @@ def get_latest_version(package_name: str) -> Optional[str]:
         return data["info"]["version"]
     except requests.RequestException:
         return None
-    
+
+
 def check_line(package_line: str) -> Tuple[Optional[str], bool]:
     """
     Check if a package is versioned and get the latest version if it's not.
@@ -58,5 +61,8 @@ def check_line(package_line: str) -> Tuple[Optional[str], bool]:
     package_name = match.group(1)
     version_specifier = match.group(2)
     version_symbols = ["==", ">", "<", ">=", "<=", "!=", "~="]
-    is_unversioned = not (version_specifier and any(symbol in version_specifier for symbol in version_symbols))
+    is_unversioned = not (
+        version_specifier
+        and any(symbol in version_specifier for symbol in version_symbols)
+    )
     return package_name, is_unversioned

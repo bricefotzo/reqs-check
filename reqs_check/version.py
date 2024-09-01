@@ -1,5 +1,3 @@
-import requests
-import re
 from pathlib import Path
 from typing import List, Dict, Optional
 import typer
@@ -86,7 +84,9 @@ def update_requirements_file(
                     updated_lines.append(f"{package}=={latest_version}")
                     updated_packages[package] = latest_version
                 else:
-                    typer.echo(f"🚫 {package} not found. Please check the package name.")
+                    typer.echo(
+                        f"🚫 {package} not found. Please check the package name."
+                    )
                     exit(0)
 
     with open(file_path, "w") as file:
