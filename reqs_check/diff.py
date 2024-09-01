@@ -44,7 +44,7 @@ def filter_differences(df: pd.DataFrame) -> pd.DataFrame:
     return df_filtered
 
 
-def compare_requirements(files: list[str] | list[Path]) -> pd.DataFrame:
+def compare_requirements(files: list[Path]) -> pd.DataFrame:
     """
     Compare multiple requirements files and return a DataFrame of the differences.
 
